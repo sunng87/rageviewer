@@ -4,9 +4,8 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
     <title>Rage Viewer</title>
-    <link rel="stylesheet" href="styles/default.css" type="text/css" media="screen" charset="utf-8">    
+    <link rel="stylesheet" href="styles/default.css" type="text/css" charset="utf-8">    
     <script src="scripts/rageviewer.js" type="text/javascript" charset="utf-8"></script>
-        
 </head>
 <body>
     <div id="page">
@@ -19,12 +18,13 @@
             <p>DOWNVOTEs: <span id="rage-votedown">-</span></p>
         </div>
         <p>
-            <button>prev</button>
-            <button>next</button>
+            <button onclick="rageviewer.show_prev_rage();">prev</button>
+            <button onclick="rageviewer.show_next_rage();">next</button>
         </p>
 
         <div id="footer">&copy; sunng.info;</div>
     </div>
+    <script src="rages?callback=rageviewer.load_rages" type="text/javascript"></script>
 </body>
 </html>
 

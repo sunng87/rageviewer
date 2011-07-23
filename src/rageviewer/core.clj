@@ -12,14 +12,16 @@
 
 (defn refresh-rages []
   (dosync
-    (ref-set rages (reddit/reddits reddit-client "fffffffuuuuuuuuuuuu"))))
+    (let [new-rages (reddit/reddits reddit-client "fffffffuuuuuuuuuuuu")]
+      (if-not (empty? new-rages)
+        (ref-set rages new-rages)))))
 
 (defn shedule-refresh-task [] 
   (.scheduleWithFixedDelay (. Executors newScheduledThreadPool 1) 
     refresh-rages 0 10 (. TimeUnit MINUTES)))
 
 (defn json-response [data, callback]
-  {:headers {"Content-Type" "application/json"}
+  {:headers {"Content-Type" (if (nil? callback) "application/json" "text/javascript")}
    :body (if 
            (nil? callback) 
            (json/json-str data) 
