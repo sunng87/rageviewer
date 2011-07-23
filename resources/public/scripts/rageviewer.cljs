@@ -29,7 +29,6 @@
 
 (defn ^:export load-rages [rages]
   (do
-    ((js* "console.log") rages)
     (set! loaded-rages rages)
     (show-next-rage)))
 
