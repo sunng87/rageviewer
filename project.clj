@@ -5,4 +5,5 @@
                  [compojure "0.6.5"]
                  [reddit.clj "0.1.1"]]
   :dev-dependencies [[lein-ring "0.4.5"]]
-  :ring {:handler rageviewer.core/app})
+  :ring {:handler rageviewer.core/app
+         :init  rageviewer.core/app-init})

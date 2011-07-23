@@ -16,7 +16,7 @@
       (if-not (empty? new-rages)
         (ref-set rages new-rages)))))
 
-(defn shedule-refresh-task [] 
+(defn schedule-refresh-task [] 
   (.scheduleWithFixedDelay (. Executors newScheduledThreadPool 1) 
     refresh-rages 0 10 (. TimeUnit MINUTES)))
 
@@ -33,8 +33,9 @@
   (route/files "/" {:root "./resources/public"})
   (route/not-found "Page not found"))
 
+(defn app-init []
+  (schedule-refresh-task))
+
 (def app
-  (do
-    (shedule-refresh-task)
-    (handler/site default-routes)))
+  (handler/site default-routes))
 
