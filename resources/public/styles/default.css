@@ -1,0 +1,41 @@
+body {
+    background-color:#C0DAE0;
+    color:#000000;
+    margin:0;
+    padding:0;
+}
+#page {
+}
+h1.heading{
+    margin:0;
+    padding:5px;
+    background-color:#5D929E;
+    font-size:1.5em;
+}
+img {
+    vertical-align:middle;
+}
+p {
+    margin:5px;
+    font-size:0.8em;
+}
+#viewport {
+    padding:15px;
+}
+h2 {
+    font-size:1.2em;
+}
+#rage-voteup {
+    font-weight:bold;
+    color: #54141B;
+}
+
+#rage-votedown {
+    font-weight:bold;
+    color: #145416;
+}
+#footer {
+    padding:5px;
+    font-size:0.7em;
+}
+
