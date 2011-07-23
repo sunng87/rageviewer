@@ -1,13 +1,15 @@
 # rageviewer
 
-FIXME: write description
+A rage comic viewer written in clojure.
 
 ## Usage
 
-FIXME: write
+1. Check the code from github
+2. lein deps
+3. lein ring server
 
 ## License
 
-Copyright (C) 2011 FIXME
+Copyright (C) 2011 Sunng
 
 Distributed under the Eclipse Public License, the same as Clojure.
