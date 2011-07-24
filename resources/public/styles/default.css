@@ -5,12 +5,14 @@ body {
     padding:0;
 }
 #page {
+  text-align:center;
 }
 h1.heading{
     margin:0;
     padding:5px;
     background-color:#5D929E;
     font-size:1.5em;
+    text-align: left;
 }
 img {
     vertical-align:middle;
@@ -21,9 +23,15 @@ p {
 }
 #viewport {
     padding:15px;
+    width:60%;
+    margin:auto;
 }
 h2 {
     font-size:1.2em;
+}
+#rage-votes{
+  float:right;
+  text-align: right;
 }
 #rage-voteup {
     font-weight:bold;
@@ -33,6 +41,16 @@ h2 {
 #rage-votedown {
     font-weight:bold;
     color: #145416;
+}
+#rage-info {
+  text-align:left;
+}
+#rage-author {
+  font-size:1.5em;
+  font-weight:bold;
+}
+#rage-date{
+  font-size:0.7em;
 }
 #footer {
     padding:5px;

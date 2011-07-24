@@ -6,3 +6,5 @@ pom.xml
 .lein-deps-sum
 *.swp
 resources/public/scripts/out
+*~
+*.war

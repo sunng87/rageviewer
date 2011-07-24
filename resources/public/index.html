@@ -13,14 +13,20 @@
 
         <div id="viewport">
             <h2 id="rage-title">No rage loaded</h2>
-            <img src="" title="" id="rage-img" />
-            <p>UPVOTEs: <span id="rage-voteup">-</span></p>
-            <p>DOWNVOTEs: <span id="rage-votedown">-</span></p>
+            <div><img src="" title="-" id="rage-img" /></div>
+            <div id="rage-votes">
+              <p>UPVOTEs: <span id="rage-voteup">-</span></p>
+              <p>DOWNVOTEs: <span id="rage-votedown">-</span></p>
+            </div>
+            <div id="rage-info">
+              <p>Author: <span id="rage-author">-</span></p>
+              <p>Date published: <span id="rage-date">-</span></p>
+            </div>
         </div>
-        <p>
+        <div>
             <button onclick="rageviewer.show_prev_rage();">prev</button>
             <button onclick="rageviewer.show_next_rage();">next</button>
-        </p>
+        </div>
 
         <div id="footer">&copy; sunng.info; Created with clojure/compojure and clojurescript.</div>
     </div>
