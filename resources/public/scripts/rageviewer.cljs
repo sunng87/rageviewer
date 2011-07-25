@@ -24,6 +24,8 @@
     (set! (.innerHTML (by-id "rage-votedown")) (aget rage "downs"))
     (set! (.title (by-id "rage-img")) (aget rage "title"))
     (set! (.innerHTML (by-id "rage-author")) (aget rage "author"))
+    (set! (.href (by-id "rage-link")) 
+      (str "http://www.reddit.com" (aget rage "permalink")))
     (set! (.innerHTML (by-id "rage-date")) 
       (timestamp-to-date (aget rage "created")))
     (set! (.src (by-id "rage-img")) 
