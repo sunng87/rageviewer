@@ -8,3 +8,4 @@ pom.xml
 resources/public/scripts/out
 *~
 *.war
+control.clj
