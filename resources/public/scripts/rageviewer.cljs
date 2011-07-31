@@ -16,7 +16,7 @@
     (str url ".png")))
     
 (defn show-rage [rage-index]
-  (let [rage (nth loaded-rages rage-index)]
+  (let [rage (aget loaded-rages rage-index)]
     (set! (.src (by-id "rage-img")) "")
     (set! (.alt (by-id "rage-img")) "loading...") 
     (set! (.innerHTML (by-id "rage-title")) (aget rage "title"))
@@ -47,4 +47,13 @@
   (do
     (set! loaded-rages rages)
     (show-next-rage)))
+
+(defn ^:export view-feedback []
+  (let [xhr (new (js* "XMLHttpRequest") ())]
+    (doto xhr
+      (.open "POST" "./viewed")
+      (.setRequestHeader "Content-Type" "application/x-www-form-urlencoded")
+      (.send 
+        (str "id=" 
+          (aget (aget loaded-rages current-rage-index) "name"))))))
 
