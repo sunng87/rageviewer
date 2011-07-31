@@ -11,10 +11,17 @@
 (def rages (ref '()))
 
 (defn refresh-rages []
-  (dosync
-    (let [new-rages (reddit/reddits reddit-client "fffffffuuuuuuuuuuuu")]
-      (if-not (empty? new-rages)
-        (ref-set rages new-rages)))))
+  (do
+    (dosync
+      (let [new-rages (reddit/reddits reddit-client "fffffffuuuuuuuuuuuu")]
+        (if-not (empty? new-rages)
+          (ref-set rages new-rages))))
+    (doseq [rage-item @rages]
+      (redis/set *db* 
+        (str "rage-item::" (:name rage-item))
+        "" ;;TODO
+        ))
+  ))
 
 (defn app-init []
   (do
