@@ -44,14 +44,21 @@
 (defn update-view-count [id]
   (str (redis/zincrby *db* "rages-viewcount" 1 id)))
 
+(defn get-rage-by-id [id]
+  (let [rage-id (get-rage-item-key id)]
+    (redis/hgetall *db* rage-id)))
+
 (defroutes default-routes
   (GET "/" [] (redirect-to "index.html"))
-  (GET "/rages" {params :params} []
-    (json-response @rages (:callback params)))
-  (POST "/viewed" {params :params} []
-    (update-view-count (:id params)))
-  (GET "/env" {}
-    (get-env "VMC_REDIS"))
+  (GET "/rage/:id" [id callback]
+    (let [rage (get-rage-by-id id)]
+      (if-not (empty? rage)
+        (json-response rage callback)
+        {:status 404})))
+  (GET "/rages" [callback]
+    (json-response @rages callback))
+  (POST "/viewed" [id]
+    (update-view-count id))
   (route/resources "/")
   (route/not-found "Page not found"))
 
