@@ -15,9 +15,9 @@
   (doseq [rage-item lrages]
     (do
     (redis/hmset *db* 
-      (get-rage-item-key (:name rage-item)) ;;hash-key rage-item::t3_abcde
+      (get-rage-item-key (:id rage-item)) ;;hash-key rage-item::t3_abcde
       {
-       "name" (:name rage-item)
+       "id" (:id rage-item)
        "title" (:title rage-item)
        "ups" (str (:ups rage-item))
        "downs" (str (:downs rage-item))

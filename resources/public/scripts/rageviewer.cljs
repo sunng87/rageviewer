@@ -2,8 +2,15 @@
 
 (def loaded-rages)
 (def current-rage-index -1)
+(def current-rage nil)
 (defn by-id [id]
   (.getElementById (js* "document") id))
+(defn new-ele [name tags]
+  (let [ele (.createElement (js* "document") name)]
+    (do
+      (doseq [key (keys tags)]
+        (.setAttribute ele key (get tags key)))
+      ele)))
 (defn js-date [arg]
   (new (js* "Date") arg))
  
@@ -14,39 +21,54 @@
   (or 
     (first (re-matches #"http://.*?(png|jpg)$" url))
     (str url ".png")))
-    
-(defn show-rage [rage-index]
-  (let [rage (aget loaded-rages rage-index)]
-    (set! (.src (by-id "rage-img")) "")
-    (set! (.alt (by-id "rage-img")) "loading...") 
-    (set! (.innerHTML (by-id "rage-title")) (aget rage "title"))
-    (set! (.innerHTML (by-id "rage-voteup")) (aget rage "ups"))
-    (set! (.innerHTML (by-id "rage-votedown")) (aget rage "downs"))
-    (set! (.title (by-id "rage-img")) (aget rage "title"))
-    (set! (.innerHTML (by-id "rage-author")) (aget rage "author"))
-    (set! (.href (by-id "rage-link")) 
-      (str "http://www.reddit.com" (aget rage "permalink")))
-    (set! (.innerHTML (by-id "rage-date")) 
-      (timestamp-to-date (aget rage "created")))
-    (set! (.src (by-id "rage-img")) 
-      (to-imgur-url (aget rage "url")))))
+
+(defn open-jsonp [url]
+  (let [ele (new-ele "script" {"src" url "id" "jsonp-io"})]
+    (.appendChild (aget (js* "document") "head") ele)))
+
+(defn close-jsonp []
+  (let [ele (by-id "jsonp-io")]
+    (.removeChild (aget ele "parentNode") ele)))
+
+(defn show-rage [rage]
+  (set! (.src (by-id "rage-img")) "")
+  (set! (.alt (by-id "rage-img")) "loading...") 
+  (set! (.innerHTML (by-id "rage-title")) (aget rage "title"))
+  (set! (.innerHTML (by-id "rage-voteup")) (aget rage "ups"))
+  (set! (.innerHTML (by-id "rage-votedown")) (aget rage "downs"))
+  (set! (.title (by-id "rage-img")) (aget rage "title"))
+  (set! (.innerHTML (by-id "rage-author")) (aget rage "author"))
+  (set! (.href (by-id "rage-link")) 
+    (str "http://www.reddit.com" (aget rage "permalink")))
+  (set! (.innerHTML (by-id "rage-date")) 
+    (timestamp-to-date (aget rage "created")))
+  (set! (.src (by-id "rage-img")) 
+    (to-imgur-url (aget rage "url"))))
 
 (defn ^:export show-next-rage []
   (if (< current-rage-index (count loaded-rages))
     (do
       (set! current-rage-index (inc current-rage-index))
-      (show-rage current-rage-index))))
+      (set! current-rage (aget loaded-rages current-rage-index))
+      (show-rage current-rage))))
 
 (defn ^:export show-prev-rage []
   (if (> current-rage-index 0)
     (do
       (set! current-rage-index (dec current-rage-index))
-      (show-rage current-rage-index))))
+      (set! current-rage (aget loaded-rages current-rage-index))
+      (show-rage current-rage))))
 
 (defn ^:export load-rages [rages]
   (do
     (set! loaded-rages rages)
-    (show-next-rage)))
+    (show-next-rage)
+    (close-jsonp)))
+
+(defn ^:export load-rage [rage]
+  (set! current-rage rage)
+  (show-rage rage)
+  (close-jsonp))    
 
 (defn ^:export view-feedback []
   (let [xhr (new (js* "XMLHttpRequest") ())]
@@ -55,5 +77,12 @@
       (.setRequestHeader "Content-Type" "application/x-www-form-urlencoded")
       (.send 
         (str "id=" 
-          (aget (aget loaded-rages current-rage-index) "name"))))))
+          (aget current-rage "id"))))))
+
+(defn ^:export init []
+  (let [urlhash (js* "window.location.hash")]
+    (if (empty? urlhash)
+      (open-jsonp "./rages?callback=rageviewer.load_rages")
+      (open-jsonp 
+        (str "./rage/" (.substring urlhash 1) "?callback=rageviewer.load_rage")))))
 
