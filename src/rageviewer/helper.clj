@@ -31,3 +31,6 @@
 
 (defn init-redis-connections []
   (redis/init {:url (get-redis-url)}))
+
+(defn get-rage-item-key [id]
+  (str "rage-item::" id))

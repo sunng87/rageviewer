@@ -9,6 +9,23 @@
 (def reddit-client (reddit/login nil nil))
 
 (def rages (ref '()))
+(declare *db*)
+
+(defn save-rages [lrages]
+  (doseq [rage-item lrages]
+    (do
+    (redis/hmset *db* 
+      (get-rage-item-key (:name rage-item)) ;;hash-key rage-item::t3_abcde
+      {
+       "name" (:name rage-item)
+       "title" (:title rage-item)
+       "ups" (str (:ups rage-item))
+       "downs" (str (:downs rage-item))
+       "url" (:url rage-item)
+       "author" (:author rage-item)
+       "permalink" (:permalink rage-item)
+       "created" (str (:created rage-item))  ;; key-values
+      }))))
 
 (defn refresh-rages []
   (do
@@ -16,11 +33,7 @@
       (let [new-rages (reddit/reddits reddit-client "fffffffuuuuuuuuuuuu")]
         (if-not (empty? new-rages)
           (ref-set rages new-rages))))
-    (doseq [rage-item @rages]
-      (redis/set *db* 
-        (str "rage-item::" (:name rage-item))
-        "" ;;TODO
-        ))
+    (save-rages @rages)
   ))
 
 (defn app-init []
