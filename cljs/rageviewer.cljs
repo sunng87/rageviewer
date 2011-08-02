@@ -14,6 +14,10 @@
       (doseq [key (keys tags)]
         (.setAttribute ele key (get tags key)))
       ele)))
+(defn show [ele]
+  (set! (.display (aget ele "style")) "block"))
+(defn hide [ele]
+  (set! (.display (aget ele "style")) "none"))
 (defn js-date [arg]
   (new (js* "Date") arg))
  
@@ -63,15 +67,18 @@
       (show-rage current-rage))))
 
 (defn ^:export load-rages [rages]
-  (do
-    (set! loaded-rages rages)
-    (show-next-rage)
-    (close-jsonp)))
+  (set! loaded-rages rages)
+  (show-next-rage)
+  (close-jsonp)
+  (show (by-id "nav_bar"))
+  (hide (by-id "nav_bar2")))
 
 (defn ^:export load-rage [rage]
   (set! current-rage rage)
   (show-rage rage)
-  (close-jsonp))    
+  (close-jsonp)
+  (show (by-id "nav_bar2"))
+  (hide (by-id "nav_bar")))    
 
 (defn ^:export view-feedback []
   (let [xhr (new (js* "XMLHttpRequest") ())]
