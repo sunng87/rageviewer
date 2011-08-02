@@ -5,6 +5,9 @@
 (def current-rage nil)
 (defn by-id [id]
   (.getElementById (js* "document") id))
+(defn get-head []
+  (or (aget (js* "document") "head")
+      (js* "document.getElementsByTagName('head')[0]")))
 (defn new-ele [name tags]
   (let [ele (.createElement (js* "document") name)]
     (do
@@ -24,11 +27,11 @@
 
 (defn open-jsonp [url]
   (let [ele (new-ele "script" {"src" url "id" "jsonp-io"})]
-    (.appendChild (aget (js* "document") "head") ele)))
+    (.appendChild (get-head) ele)))
 
 (defn close-jsonp []
   (let [ele (by-id "jsonp-io")]
-    (.removeChild (aget ele "parentNode") ele)))
+    (.removeChild (get-head) ele)))
 
 (defn show-rage [rage]
   (set! (.src (by-id "rage-img")) "")
@@ -81,7 +84,7 @@
 
 (defn ^:export init []
   (let [urlhash (js* "window.location.hash")]
-    (if (empty? urlhash)
+    (if (<= (count urlhash) 1)
       (open-jsonp "./rages?callback=rageviewer.load_rages")
       (open-jsonp 
         (str "./rage/" (.substring urlhash 1) "?callback=rageviewer.load_rage")))))
