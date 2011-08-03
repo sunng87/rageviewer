@@ -51,7 +51,8 @@
     (timestamp-to-date (aget rage "created")))
   (set! (.src (by-id "rage-img")) 
     (to-imgur-url (aget rage "url")))
-  (set! (.href (by-id "rage-link2")) (str "#" (aget rage "id"))))
+  (set! (.href (by-id "rage-link2")) (str "#" (aget rage "id")))
+  ((js* "scroll") 0 0))
 
 (defn ^:export show-next-rage []
   (if (< current-rage-index (count loaded-rages))

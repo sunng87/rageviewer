@@ -1,21 +1,35 @@
 body {
-    background-color:#C0DAE0;
-    color:#000000;
+    /*background-color:#C0DAE0;*/
+    background-color:#FFFFE8;
+    color:#333;
     margin:0;
     padding:0;
 }
 #page {
   text-align:center;
 }
-h1.heading{
-    margin:0;
+.heading{
+    background-color:#000;
+}
+h1{
+    margin:0 auto 0 auto;
+    width:60%;
     padding:5px;
-    background-color:#5D929E;
     font-size:1.5em;
     text-align: left;
+    color:#FFF;
+    font-family:sans-serif;
 }
 img {
     vertical-align:middle;
+}
+#rage-img {
+    border:1px #CCC solid;
+    padding:1px;
+    background-color:#FFF;
+    box-shadow: 2px 2px 10px #CCC;
+    -moz-box-shadow: 2px 2px 10px #CCC;
+    -webkit-box-shadow: 2px 2px 10px #CCC;
 }
 p {
     margin:5px;
@@ -23,11 +37,12 @@ p {
 }
 #viewport {
     padding:15px;
-    width:60%;
+    width:50%;
     margin:auto;
 }
 h2 {
     font-size:1.2em;
+    text-transform: capitalize;
 }
 #rage-votes{
   float:right;
@@ -45,6 +60,12 @@ h2 {
 #rage-info {
   text-align:left;
 }
+#rage-info:after {
+    content: ".";
+    clear:both;
+    visibility:hidden;
+    display:block;
+}
 #rage-author {
   font-size:1.5em;
   font-weight:bold;
@@ -54,18 +75,38 @@ h2 {
 }
 #footer {
     padding:5px;
-    font-size:0.7em;
+    font-size:0.8em;
+    margin-top:20px;
+    background-color:#333;
+    color:#CCC;
 }
 button {
     padding:5px 20px;
     font-size:1.2em;
     font-weight:bold;
-    -moz-border-radius:2px;
-    -webkit-border-radius:2px;
-    border-radius:2px;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border-radius:5px;
     color:#FFF;
-    background-color:#5D929E;
+    background-color:#333;
     border:2px #FFF solid;
     cursor:pointer;
 }
-
+button:hover {
+    box-shadow: 0 0 5px #666;
+    -moz-box-shadow: 0 0 5px #666;
+    -webkit-box-shadow: 0 0 5px #666;
+}
+a:link, a:visited{
+    padding:2px 5px;
+    background:#333;
+    color:#FFF;
+    text-decoration:none;
+    font-family:sans-serif;
+    -moz-border-radius:2px;
+    -webkit-border-radius:2px;
+    border-radius:2px;
+}
+a:hover{
+    background-color:#666;
+}
