@@ -23,12 +23,21 @@
 
 (defn get-env [env-name]
   (System/getenv env-name))
+                                
+(defn get-vcap-redis-password []
+  (let [services (get-env "VCAP_SERVICES")
+        services-dict (json/read-json services false)]
+    (-> services-dict
+      (get "redis-2.2")
+      (first)
+      (get "credentials")
+      (get "password"))))
 
 (defn get-redis-url []
   (if-let [url (get-env "VMC_REDIS")]
-    (str "redis://" url) ; for cloud foundry 
+    (str "redis://" "user:" (get-vcap-redis-password) "@" url) ; for cloud foundry 
     "redis://127.0.0.1:6379")) ; for local test 
-
+ 
 (defn init-redis-connections []
   (redis/init {:url (get-redis-url)}))
 
