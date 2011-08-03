@@ -3,9 +3,12 @@
   (:require [clojure.contrib.json :as json])
   (:import [java.util.concurrent Executors TimeUnit]))
 
+(defn- wrap-task [task]
+  (try task (catch Exception _)))
+
 (defn schedule-refresh-task [task] 
   (.scheduleWithFixedDelay (. Executors newScheduledThreadPool 1) 
-    task 0 10 (. TimeUnit MINUTES)))
+    (wrap-task task) 0 10 (. TimeUnit MINUTES)))
   
 (defn redirect-to [path]
   {:status 302
