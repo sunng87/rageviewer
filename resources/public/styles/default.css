@@ -41,8 +41,9 @@ p {
     margin:auto;
 }
 h2 {
-    font-size:1.2em;
+    font-size:1.8em;
     text-transform: capitalize;
+    text-shadow:0 1px 0 #CCC;
 }
 #rage-votes{
   float:right;
