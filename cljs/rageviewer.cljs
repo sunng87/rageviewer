@@ -96,3 +96,7 @@
       (open-jsonp 
         (str "./rage/" (.substring urlhash 1) "?callback=rageviewer.load_rage")))))
 
+(defn ^:export show-all []
+  (set! (.hash (js* "window.location")) "") ;; remove hash
+  (open-jsonp "./rages?callback=rageviewer.load_rages"))
+
