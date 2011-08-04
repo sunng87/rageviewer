@@ -1,5 +1,5 @@
 (ns rageviewer.utils
-  (:require [goog.net :as gnet]))
+  (:require [goog.net.DefaultXmlHttpFactory :as gxhr]))
 
 (defn by-id [id]
   (.getElementById (js* "document") id))
@@ -31,7 +31,5 @@
   (let [ele (by-id "jsonp-io")]
     (.removeChild (get-head) ele)))
 
-;(defn get-xhr []
-;  (.createInstance gnet/DefaultXmlHttpFactory ()))
 (defn get-xhr []
-  (new (js* "XMLHttpRequest") ()))
+  (. (new goog.net.DefaultXmlHttpFactory ()) (createInstance)))
