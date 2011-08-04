@@ -9,7 +9,13 @@ body {
   text-align:center;
 }
 .heading{
-    background-color:#000;
+background: #424242;
+background: -moz-linear-gradient(top, #424242 0%, #0e0e0e 100%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#424242), color-stop(100%,#0e0e0e));
+background: -webkit-linear-gradient(top, #424242 0%,#0e0e0e 100%);
+background: -o-linear-gradient(top, #424242 0%,#0e0e0e 100%);
+background: -ms-linear-gradient(top, #424242 0%,#0e0e0e 100%);
+background: linear-gradient(top, #424242 0%,#0e0e0e 100%);
 }
 h1{
     margin:0 auto 0 auto;
