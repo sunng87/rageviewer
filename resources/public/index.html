@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="styles/default.css" type="text/css" charset="utf-8">    
     <script src="scripts/rageviewer.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript">
-        window.onload = rageviewer.init;
+        window.onload = rageviewer.core.init;
     </script>
 </head>
 <body>
@@ -27,13 +27,13 @@
                  <a href="-" target="new" id="rage-link2">Permalink on RageViewer</a></p>
             </div>
         </div>
-        <div id="viewport"><img src="" title="-" id="rage-img" onload="rageviewer.view_feedback();" /></div>
+        <div id="viewport"><img src="" title="-" id="rage-img" onload="rageviewer.core.view_feedback();" /></div>
         <div id="nav_bar">
-            <button onclick="rageviewer.show_prev_rage();">prev</button>
-            <button onclick="rageviewer.show_next_rage();">next</button>
+            <button onclick="rageviewer.core.show_prev_rage();">prev</button>
+            <button onclick="rageviewer.core.show_next_rage();">next</button>
         </div>
         <div id="nav_bar2">
-            <button onclick="rageviewer.show_all();">show most recent hot comics</button>
+            <button onclick="rageviewer.core.show_all();">show most recent hot comics</button>
         </div>
 
         <div id="footer">&copy; Drafted by <a href="http://sunng.info/">@Sunng</a>, 
