@@ -32,7 +32,8 @@
     (dosync
       (let [new-rages (reddit/reddits reddit-client "fffffffuuuuuuuuuuuu")]
         (if-not (empty? new-rages)
-          (ref-set rages new-rages))))
+          (ref-set rages 
+            (filter #(re-find #"imgur\.com" (:domain %)) new-rages)))))
     (save-rages @rages)
   ))
 
