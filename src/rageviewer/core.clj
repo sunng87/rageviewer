@@ -15,7 +15,7 @@
   (doseq [rage-item lrages]
     (do
     (redis/hmset *db* 
-      (get-rage-item-key (:id rage-item)) ;;hash-key rage-item::t3_abcde
+      (get-rage-item-key (:id rage-item)) ;;hash-key rage-item::abcde
       {
        "id" (:id rage-item)
        "title" (:title rage-item)
@@ -33,7 +33,7 @@
       (let [new-rages (reddit/reddits reddit-client "fffffffuuuuuuuuuuuu")]
         (if-not (empty? new-rages)
           (ref-set rages 
-            (filter #(re-find #"imgur\.com" (:domain %)) new-rages)))))
+            (filter #(re-find #"imgur\.com" (:domain %)) new-rages))))) ;;only accept comics from imgur.com
     (save-rages @rages)
   ))
 
