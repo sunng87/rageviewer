@@ -41,10 +41,14 @@ p {
     margin:5px;
     font-size:0.8em;
 }
-#viewport {
+#rage-header {
     padding:15px;
     width:50%;
     margin:auto;
+}
+#viewport{
+    margin:auto;
+    margin-bottom:25px;
 }
 h2 {
     font-size:1.8em;
@@ -78,7 +82,7 @@ h2 {
   font-weight:bold;
 }
 #rage-date, #rage-link, #rage-link2{
-  font-size:0.7em;
+  font-size:0.8em;
 }
 #footer {
     padding:5px;

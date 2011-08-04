@@ -18,6 +18,7 @@
   (set! (.display (aget ele "style")) "block"))
 (defn hide [ele]
   (set! (.display (aget ele "style")) "none"))
+(def alert (js* "alert"))
 (defn js-date [arg]
   (new (js* "Date") arg))
  
@@ -55,18 +56,20 @@
   ((js* "scroll") 0 0))
 
 (defn ^:export show-next-rage []
-  (if (< current-rage-index (count loaded-rages))
+  (if (< current-rage-index (- (count loaded-rages) 1))
     (do
       (set! current-rage-index (inc current-rage-index))
       (set! current-rage (aget loaded-rages current-rage-index))
-      (show-rage current-rage))))
+      (show-rage current-rage))
+    (alert "Sorry, but this is the last one.")))
 
 (defn ^:export show-prev-rage []
   (if (> current-rage-index 0)
     (do
       (set! current-rage-index (dec current-rage-index))
       (set! current-rage (aget loaded-rages current-rage-index))
-      (show-rage current-rage))))
+      (show-rage current-rage))
+    (alert "Sorry, but this is the first one.")))
 
 (defn ^:export load-rages [rages]
   (set! loaded-rages rages)
