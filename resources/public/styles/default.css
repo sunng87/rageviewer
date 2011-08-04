@@ -16,6 +16,9 @@ background: -webkit-linear-gradient(top, #424242 0%,#0e0e0e 100%);
 background: -o-linear-gradient(top, #424242 0%,#0e0e0e 100%);
 background: -ms-linear-gradient(top, #424242 0%,#0e0e0e 100%);
 background: linear-gradient(top, #424242 0%,#0e0e0e 100%);
+position:fixed;
+top:0;
+width:100%;
 }
 h1{
     margin:0 auto 0 auto;
@@ -23,7 +26,7 @@ h1{
     padding:5px;
     font-size:1.5em;
     text-align: left;
-    color:#FFF;
+    color:#FFFFE8;
     font-family:sans-serif;
 }
 img {
@@ -45,6 +48,7 @@ p {
     padding:15px;
     width:50%;
     margin:auto;
+    margin-top:60px;
 }
 #viewport{
     margin:auto;
@@ -54,6 +58,7 @@ h2 {
     font-size:1.8em;
     text-transform: capitalize;
     text-shadow:0 1px 0 #CCC;
+    font-style:italic;
 }
 #rage-votes{
   float:right;
