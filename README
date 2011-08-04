@@ -6,7 +6,8 @@ A rage comic viewer written in clojure.
 
 1. Check the code from github
 2. lein deps
-3. lein ring server
+3. Start a redis server on localhost and listen default port
+4. lein ring server
 
 ## License
 
