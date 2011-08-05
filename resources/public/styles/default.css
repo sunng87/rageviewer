@@ -54,7 +54,7 @@ p {
     margin:auto;
     margin-bottom:25px;
 }
-h2 {
+h2.default_title {
     font-size:1.8em;
     text-transform: capitalize;
     text-shadow:0 1px 0 #CCC;
