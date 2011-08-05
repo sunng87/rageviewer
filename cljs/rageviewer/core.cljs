@@ -55,13 +55,11 @@
   (utils/hide (utils/by-id "nav_bar")))    
 
 (defn ^:export view-feedback []
-  (let [xhr (utils/get-xhr)]
-    (doto xhr
-      (.open "POST" "./viewed")
-      (.setRequestHeader "Content-Type" "application/x-www-form-urlencoded")
-      (.send 
-        (str "id=" 
-          (aget current-rage "id"))))))
+  (utils/send-xhr
+    "./viewed"
+    "POST"
+    (str "id=" (aget current-rage "id"))
+    {"Content-Type" "application/x-www-form-urlencoded"}))
 
 (defn ^:export init []
   (let [urlhash (js* "window.location.hash")]

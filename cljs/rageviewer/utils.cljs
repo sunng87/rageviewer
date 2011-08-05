@@ -1,5 +1,5 @@
 (ns rageviewer.utils
-  (:require [goog.net.DefaultXmlHttpFactory :as gxhr]
+  (:require [goog.net.XhrIo :as gxhr]
             [goog.net.Jsonp :as gjsonp]))
 
 (defn by-id [id]
@@ -30,6 +30,14 @@
       payload
       callback)))
 
-(defn get-xhr []
-  (. (new goog.net.DefaultXmlHttpFactory ()) (createInstance)))
+;; copied from mjg123's gist: https://gist.github.com/1098417
+(defn make-js-map [cljmap]
+  (let [out (js-obj)]
+    (doall (map #(aset out (name (first %)) (second %)) cljmap))
+    out))
+
+(defn send-xhr [url method content headers]
+  (let [xhr (goog.net.XhrIo.)
+        header-obj (make-js-map headers)]
+     (.send xhr url method content header-obj)))
 
