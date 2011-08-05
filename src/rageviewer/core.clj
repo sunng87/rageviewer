@@ -14,18 +14,21 @@
 (defn save-rages [lrages]
   (doseq [rage-item lrages]
     (do
-    (redis/hmset *db* 
-      (get-rage-item-key (:id rage-item)) ;;hash-key rage-item::abcde
-      {
-       "id" (:id rage-item)
-       "title" (:title rage-item)
-       "ups" (str (:ups rage-item))
-       "downs" (str (:downs rage-item))
-       "url" (:url rage-item)
-       "author" (:author rage-item)
-       "permalink" (:permalink rage-item)
-       "created" (str (:created rage-item))  ;; key-values
-      }))))
+      (let [{id :id title :title ups :ups 
+             downs :downs url :url author :author 
+             permalink :permalink created :created} rage-item]
+        (redis/hmset *db* 
+          (get-rage-item-key id) ;;hash-key rage-item::abcde
+          {
+           "id" id
+           "title" title
+           "ups" (str ups)
+           "downs" (str downs)
+           "url" url
+           "author" author
+           "permalink" permalink
+           "created" (str created)  ;; key-values
+          })))))
 
 (defn refresh-rages []
   (do
@@ -39,8 +42,9 @@
 
 (defn app-init []
   (do
-    (schedule-refresh-task refresh-rages)
-    (def *db* (init-redis-connections))))
+    (def *db* (init-redis-connections))
+    (refresh-rages)
+    (schedule-refresh-task refresh-rages)))
 
 (defn update-view-count [id]
   (str (redis/zincrby *db* "rages-viewcount" 1 id)))
