@@ -45,14 +45,12 @@
 (defn ^:export load-rages [rages]
   (set! loaded-rages rages)
   (show-next-rage)
-  (utils/close-jsonp)
   (utils/show (utils/by-id "nav_bar"))
   (utils/hide (utils/by-id "nav_bar2")))
 
 (defn ^:export load-rage [rage]
   (set! current-rage rage)
   (show-rage rage)
-  (utils/close-jsonp)
   (utils/show (utils/by-id "nav_bar2"))
   (utils/hide (utils/by-id "nav_bar")))    
 
@@ -68,11 +66,12 @@
 (defn ^:export init []
   (let [urlhash (js* "window.location.hash")]
     (if (<= (count urlhash) 1)
-      (utils/open-jsonp "./rages?callback=rageviewer.core.load_rages")
+      (utils/open-jsonp "./rages" nil rageviewer.core.load_rages)
       (utils/open-jsonp 
-        (str "./rage/" (.substring urlhash 1) "?callback=rageviewer.core.load_rage")))))
+        (str "./rage/" (.substring urlhash 1)) nil 
+          rageviewer.core.load_rage))))
 
 (defn ^:export show-all []
   (set! (.hash (js* "window.location")) "") ;; remove hash
-  (utils/open-jsonp "./rages?callback=rageviewer.core.load_rages"))
+  (utils/open-jsonp "./rages" nil rageviewer.core.load_rages))
 

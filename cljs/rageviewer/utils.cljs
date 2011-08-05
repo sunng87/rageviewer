@@ -1,5 +1,6 @@
 (ns rageviewer.utils
-  (:require [goog.net.DefaultXmlHttpFactory :as gxhr]))
+  (:require [goog.net.DefaultXmlHttpFactory :as gxhr]
+            [goog.net.Jsonp :as gjsonp]))
 
 (defn by-id [id]
   (.getElementById (js* "document") id))
@@ -23,13 +24,12 @@
 (defn timestamp-to-date [ts]
   (. (js-date (* 1000 ts)) (toUTCString)))
     
-(defn open-jsonp [url]
-  (let [ele (new-ele "script" {"src" url "id" "jsonp-io"})]
-    (.appendChild (get-head) ele)))
-
-(defn close-jsonp []
-  (let [ele (by-id "jsonp-io")]
-    (.removeChild (get-head) ele)))
+(defn open-jsonp [url, payload, callback]
+  (let [jsonp (goog.net.Jsonp. url)]
+    (.send jsonp
+      payload
+      callback)))
 
 (defn get-xhr []
   (. (new goog.net.DefaultXmlHttpFactory ()) (createInstance)))
+
