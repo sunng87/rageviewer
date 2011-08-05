@@ -3,7 +3,8 @@
   (:use rageviewer.helper)
   (:require [compojure.route :as route]
             [compojure.handler :as handler]
-            [clj-redis.client :as redis])
+            [clj-redis.client :as redis]
+            [clojure.contrib.logging :as logging])
   (:require [reddit.clj.core :as reddit]))
 
 (def reddit-client (reddit/login nil nil))
@@ -37,12 +38,15 @@
         (if-not (empty? new-rages)
           (ref-set rages 
             (filter #(re-find #"imgur\.com" (:domain %)) new-rages))))) ;;only accept comics from imgur.com
+    (logging/info (str (count @rages) " rages loaded"))
     (save-rages @rages)
+    (logging/info (str (count @rages) " rages saved"))
   ))
 
 (defn app-init []
   (do
     (def *db* (init-redis-connections))
+    (logging/info "database initialized")
     (refresh-rages)
     (schedule-refresh-task refresh-rages)))
 

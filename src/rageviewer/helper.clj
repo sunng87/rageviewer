@@ -1,14 +1,15 @@
 (ns rageviewer.helper
   (:require [clj-redis.client :as redis])
   (:require [clojure.contrib.json :as json])
+  (:require [clojure.contrib.logging :as logging])
   (:import [java.util.concurrent Executors TimeUnit]))
 
 (defn- wrap-task [task]
-  (try task (catch Exception _)))
+  (try task (catch Exception e (logging/warn "Exception caught on scheduled task" e))))
 
 (defn schedule-refresh-task [task] 
   (.scheduleWithFixedDelay (. Executors newScheduledThreadPool 1) 
-    (wrap-task task) 0 10 (. TimeUnit MINUTES)))
+    (wrap-task task) 10 10 (. TimeUnit MINUTES)))
   
 (defn redirect-to [path]
   {:status 302
