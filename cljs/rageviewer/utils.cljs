@@ -1,18 +1,19 @@
 (ns rageviewer.utils
   (:require [goog.net.XhrIo :as gxhr]
-            [goog.net.Jsonp :as gjsonp]))
+            [goog.net.Jsonp :as gjsonp]
+            [goog.dom :as dom]))
 
-(defn by-id [id]
-  (.getElementById (js* "document") id))
-(defn get-head []
-  (or (aget (js* "document") "head")
-      (js* "document.getElementsByTagName('head')[0]")))
+(defn by-id [id] (dom/$ id))
+
+;; copied from mjg123's gist: https://gist.github.com/1098417
+(defn as-js-obj [cljmap]
+  (let [out (js-obj)]
+    (doall (map #(aset out (name (first %)) (second %)) cljmap))
+    out))
+
 (defn new-ele [name tags]
-  (let [ele (.createElement (js* "document") name)]
-    (do
-      (doseq [key (keys tags)]
-        (.setAttribute ele key (get tags key)))
-      ele)))
+  (dom/createDom name (as-js-obj tags)))
+
 (defn show [ele]
   (set! (.display (aget ele "style")) "block"))
 (defn hide [ele]
@@ -30,14 +31,8 @@
       payload
       callback)))
 
-;; copied from mjg123's gist: https://gist.github.com/1098417
-(defn make-js-map [cljmap]
-  (let [out (js-obj)]
-    (doall (map #(aset out (name (first %)) (second %)) cljmap))
-    out))
-
 (defn send-xhr [url method content headers]
   (let [xhr (goog.net.XhrIo.)
-        header-obj (make-js-map headers)]
+        header-obj (as-js-obj headers)]
      (.send xhr url method content header-obj)))
 
