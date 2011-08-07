@@ -10,6 +10,7 @@
 (def reddit-client (reddit/login nil nil))
 
 (def rages (ref '()))
+(defonce rages-viewcount "rages-viewcount")
 (declare *db*)
 
 (defn save-rages [lrages]
@@ -51,11 +52,15 @@
     (schedule-refresh-task refresh-rages)))
 
 (defn update-view-count [id]
-  (str (redis/zincrby *db* "rages-viewcount" 1 id)))
+  (str (redis/zincrby *db* rages-viewcount 1 id)))
 
 (defn get-rage-by-id [id]
   (let [rage-id (get-rage-item-key id)]
     (redis/hgetall *db* rage-id)))
+          
+(defn get-top-rages []
+  (let [top-rages (redis/zrevrange *db* rages-viewcount 0 4)]
+    (pmap get-rage-by-id top-rages)))
 
 (defroutes default-routes
   (GET "/" [] (redirect-to "index.html"))
@@ -68,6 +73,8 @@
     (json-response @rages callback))
   (POST "/viewed" [id]
     (update-view-count id))
+  (GET "/top" [callback]
+    (json-response (get-top-rages) callback))
   (route/resources "/")
   (route/not-found "Page not found"))
 
