@@ -13,11 +13,17 @@
 
 (defn new-ele [name tags]
   (dom/createDom name (as-js-obj tags)))
+(defn append-ele [parent child]
+  (dom/appendChild parent child))
 
 (defn show [ele]
   (set! (.display (aget ele "style")) "block"))
 (defn hide [ele]
   (set! (.display (aget ele "style")) "none"))
+(defn toggle [ele]  
+  (if (= (.display (aget ele "style")) "none")
+    (show ele)
+    (hide ele)))
 (def alert (js* "alert"))
 (defn js-date [arg]
   (new (js* "Date") arg))

@@ -73,3 +73,21 @@
   (set! (.hash (js* "window.location")) "") ;; remove hash
   (utils/open-jsonp "./rages" nil rageviewer.core.load_rages))
 
+(defn make-rage-ele [rage]
+  (utils/new-ele "li" 
+    {"className" "top-rage-item" "innerHTML" (aget rage "title")}))
+
+(defn ^:export load_top_rages [rages]
+  (let [container (utils/new-ele "ul" {"id" "top-rages-list"})]
+    (reduce 
+      (fn [container rage]
+        (do
+          (utils/append-ele container (make-rage-ele rage))
+          container))
+      container rages)))
+
+(defn ^:export show-top-rages []
+  (if (nil? utils/by-id "top-rages-list")
+    (utils/open-jsonp "./top" nil rageviewer.core.load_top_rages))
+  (utils/toggle (utils/by-id "top-rages-container")))
+
