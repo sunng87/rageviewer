@@ -24,6 +24,7 @@
   (set! (.src (utils/by-id "rage-img")) 
     (to-imgur-url (aget rage "url")))
   (set! (.href (utils/by-id "rage-link2")) (str "#" (aget rage "id")))
+  (set! (.title utils/document) (str (aget rage "title") " | Rage Viewer"))
   ((js* "scroll") 0 0))
 
 (defn ^:export show-next-rage []

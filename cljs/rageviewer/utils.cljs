@@ -4,6 +4,7 @@
             [goog.dom :as dom]))
 
 (defn by-id [id] (dom/$ id))
+(def document (dom/getDocument))
 
 ;; copied from mjg123's gist: https://gist.github.com/1098417
 (defn as-js-obj [cljmap]
