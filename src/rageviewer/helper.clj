@@ -8,7 +8,7 @@
   (try task (catch Exception e (logging/warn "Exception caught on scheduled task" e))))
 
 (defn schedule-refresh-task [task] 
-  (.scheduleWithFixedDelay (. Executors newScheduledThreadPool 1) 
+  (.scheduleWithFixedDelay (. Executors newScheduledThreadPool 2) 
     (wrap-task task) 10 10 (. TimeUnit MINUTES)))
   
 (defn redirect-to [path]
