@@ -27,10 +27,10 @@ h1{
     margin:0 auto 0 auto;
     width:60%;
     padding:5px;
-    font-size:1.5em;
+    font-size:2em;
     text-align: left;
     color:#FFFFE8;
-    font-family:sans-serif;
+    font-family:'Short Stack', sans-serif;
 }
 img {
     vertical-align:middle;
@@ -61,7 +61,7 @@ h2.default_title {
     font-size:1.8em;
     text-transform: capitalize;
     text-shadow:0 1px 0 #CCC;
-    font-style:italic;
+    font-family:'Short Stack', sans-serif;
 }
 #rage-votes{
   float:right;
@@ -88,6 +88,7 @@ h2.default_title {
 #rage-author {
   font-size:1.5em;
   font-weight:bold;
+  font-family:'Short Stack', sans-serif;
 }
 #rage-date, #rage-link, #rage-link2{
   font-size:0.8em;
