@@ -84,8 +84,11 @@
       (if-not (empty? rage)
         (json-response rage callback)
         {:status 404})))
-  (GET "/rages" [callback]
-    (json-response @rages callback))
+  (GET "/rages/:channel" [channel callback]
+    (let [channel-rages (@rages (keyword channel))]
+      (if-not (empty? channel-rages)
+        (json-response channel-rages callback)
+        {:status 404})))
   (POST "/viewed" [id]
     (update-view-count id))
   (GET "/top" [callback]
