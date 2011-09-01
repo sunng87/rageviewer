@@ -9,7 +9,18 @@
 
 (def reddit-client (reddit/login nil nil))
 
-(def rages (ref '()))
+(def rages (ref {}))
+(def rage-subreddits
+  {:f7u12 "fffffffuuuuuuuuuuuu"
+   :novels "ragenovels"
+   :recipes "fffffffuuuuuuuuuuuud"
+   :classic "classicrage"
+   :ladies "trollxchromosomes"
+   :news "nnnnnnneeeeeeeeeeeews"
+   :athiest "aaaaaatheismmmmmmmmmm"
+   :military "rageops"
+   :dreams "ragedreams"
+   :historical "historicalrage"})
 (defonce rages-viewcount "rages-viewcount")
 (declare *db*)
 
@@ -32,16 +43,20 @@
            "created" (str created)  ;; key-values
           })))))
 
+(defn- download-rage [name]
+  (let [new-rages (reddit/reddits reddit-client (rage-subreddits name))]
+    (if-not (empty? new-rages)
+      (dosync
+        (alter rages assoc name
+          (filter #(re-find #"imgur\.com" (:domain %)) new-rages)))))) ;;only accept comics from imgur.com
+
 (defn refresh-rages []
   (do
-    (dosync
-      (let [new-rages (reddit/reddits reddit-client "fffffffuuuuuuuuuuuu")]
-        (if-not (empty? new-rages)
-          (ref-set rages 
-            (filter #(re-find #"imgur\.com" (:domain %)) new-rages))))) ;;only accept comics from imgur.com
-    (logging/info (str (count @rages) " rages loaded"))
-    (save-rages @rages)
-    (logging/info (str (count @rages) " rages saved"))
+    (doall (pmap download-rage (keys rage-subreddits)))
+    (let [loaded-rages (apply concat (vals @rages))]
+      (logging/info (str (count loaded-rages) " rages loaded"))
+      (save-rages loaded-rages)
+      (logging/info (str (count loaded-rages) " rages saved")))
   ))
 
 (defn app-init []
