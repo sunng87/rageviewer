@@ -62,10 +62,13 @@
     (str "id=" (aget current-rage "id"))
     {"Content-Type" "application/x-www-form-urlencoded"}))
 
+(defn ^:export open-rages [channel]
+  (utils/open-jsonp (str "./rages/" channel) nil rageviewer.core.load_rages))
+
 (defn ^:export init []
   (let [urlhash (js* "window.location.hash")]
     (if (<= (count urlhash) 1)
-      (utils/open-jsonp "./rages" nil rageviewer.core.load_rages)
+      (open-rages "f7u12")
       (utils/open-jsonp 
         (str "./rage/" (.substring urlhash 1)) nil 
           rageviewer.core.load_rage))))
