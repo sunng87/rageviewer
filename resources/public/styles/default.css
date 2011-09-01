@@ -32,6 +32,9 @@ h1{
     color:#FFFFE8;
     font-family:'Short Stack', sans-serif;
 }
+h1:hover{
+    color:#FFF;
+}
 img {
     vertical-align:middle;
 }
@@ -108,11 +111,22 @@ button {
     -webkit-border-radius:5px;
     border-radius:5px;
     color:#FFF;
-    background-color:#333;
-    border:2px #FFF solid;
     cursor:pointer;
+    border:0;
+background: #424242;
+background: -moz-linear-gradient(top, #424242 0%, #0e0e0e 100%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#424242), color-stop(100%,#0e0e0e));
+background: -webkit-linear-gradient(top, #424242 0%,#0e0e0e 100%);
+background: -o-linear-gradient(top, #424242 0%,#0e0e0e 100%);
+background: -ms-linear-gradient(top, #424242 0%,#0e0e0e 100%);
+background: linear-gradient(top, #424242 0%,#0e0e0e 100%);
+    box-shadow: 0 0 2px #666;
+    -moz-box-shadow: 0 0 2px #666;
+    -webkit-box-shadow: 0 0 2px #666;
 }
 button:hover {
+    background:#CCC;
+    color:#424242;
     box-shadow: 0 0 5px #666;
     -moz-box-shadow: 0 0 5px #666;
     -webkit-box-shadow: 0 0 5px #666;
