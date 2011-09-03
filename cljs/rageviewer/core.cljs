@@ -45,6 +45,7 @@
 
 (defn ^:export load-rages [rages]
   (set! loaded-rages rages)
+  (set! current-rage-index -1)
   (show-next-rage)
   (utils/show (utils/by-id "nav_bar"))
   (utils/hide (utils/by-id "nav_bar2")))
@@ -94,4 +95,19 @@
   (if (nil? utils/by-id "top-rages-list")
     (utils/open-jsonp "./top" nil rageviewer.core.load_top_rages))
   (utils/toggle (utils/by-id "top-rages-container")))
+
+(defn ^:export show-channel-selector []
+  (utils/hide (utils/by-id "channel-label"))
+  (utils/show (utils/by-id "channel-selector")))
+
+(defn ^:export set-channel []
+  (let [selector (utils/by-id "channel-selector")
+        selected-index (.selectedIndex selector)
+        selected-option (aget (.options selector) selected-index)
+        selected-channel (.value selected-option)]
+        
+    (set! (.innerHTML (utils/by-id "channel-label")) selected-channel)
+    (utils/show (utils/by-id "channel-label"))
+    (utils/hide (utils/by-id "channel-selector"))
+    (open-rages selected-channel)))
 

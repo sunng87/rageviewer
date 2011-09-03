@@ -41,17 +41,19 @@ img {
     margin:0 auto 0 auto;
     width:60%;
 }
-#channel-selector {
+#channel-indicator {
     float:right;
     color:#FFF;
     padding:5px 15px;
     font-size:0.8em;
     font-weight:bold;
     border-left:1px #999 dashed;
-    margin:15px;
+    margin:10px;
     height:100%;
+    width:80px;
+    text-align:left;
 }
-#channel-selector:hover {
+#channel-indicator:hover {
     background-color:#FFFFE8;
     color:#000;
     border:0;
@@ -61,7 +63,13 @@ img {
     box-shadow: inset 0 0 5px #000;
     -moz-box-shadow: inset 0 0 5px #000;
     -webkit-box-shadow: inset 0 0 5px #000;
+}
+#channel-selector {
+    display:none;
+}
+#channel-label{
     cursor:pointer;
+    display:block;
 }
 #rage-img {
     border:1px #CCC solid;
@@ -168,4 +176,8 @@ a:link, a:visited{
 }
 a:hover{
     background-color:#666;
+}
+.smallx {
+    font-size:0.6em;
+    font-weight:normal;
 }

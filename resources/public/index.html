@@ -15,8 +15,21 @@
     <div id="page">
         <div class="heading">
             <div id="inner-heading">
-                <div id="channel-selector" title="Current Rage Comic Channel">
-                f7u12
+                <div id="channel-indicator" title="Current Rage Comic Channel">
+                    <span class="smallx">Channel:</span>
+                    <span id="channel-label" onclick="rageviewer.core.show_channel_selector();">f7u12</span>
+                    <select id="channel-selector" onchange="rageviewer.core.set_channel();">
+                        <option selected="true">f7u12</option>
+                        <option>novels</option>
+                        <option>recipes</option>
+                        <option>classic</option>
+                        <option>ladies</option>
+                        <option>news</option>
+                        <option>athiest</option>
+                        <option>military</option>
+                        <option>dreams</option>
+                        <option>historical</option>
+                    </select>
                 </div>
                 <h1><img src="rageface.png" /> Rage Viewer</h1>
             </div>
