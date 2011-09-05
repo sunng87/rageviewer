@@ -7,7 +7,10 @@
 (defn to-imgur-url [url]
   (or 
     (first (re-matches #"http://.*?(png|jpg)$" url))
-    (str url ".png")))
+    (str 
+      (if (re-find #"\\?$" url)
+        (subs url 0 (- (count url) 1)) url)
+      ".png")))
 
 (defn show-rage [rage]
   (set! (.src (utils/by-id "rage-img")) "")
