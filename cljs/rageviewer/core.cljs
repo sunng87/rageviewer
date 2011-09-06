@@ -8,7 +8,7 @@
   (or 
     (first (re-matches #"http://.*?(png|jpg)$" url))
     (str 
-      (if (re-find #"\\?$" url)
+      (if (re-find #"\?$" url)
         (subs url 0 (- (count url) 1)) url)
       ".png")))
 
