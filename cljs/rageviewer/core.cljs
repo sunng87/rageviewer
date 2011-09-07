@@ -24,11 +24,14 @@
     (str "http://www.reddit.com" (aget rage "permalink")))
   (set! (.innerHTML (utils/by-id "rage-date")) 
     (utils/timestamp-to-date (aget rage "created")))
-  (set! (.src (utils/by-id "rage-img")) 
-    (to-imgur-url (aget rage "url")))
   (set! (.href (utils/by-id "rage-link2")) (str "#" (aget rage "id")))
   (set! (.title utils/document) (str (aget rage "title") " | Rage Viewer"))
-  ((js* "scroll") 0 0))
+  ((js* "scroll") 0 0)
+  (if (or (not= "true" (str (aget rage "over_18")))
+          (true? ((js* "confirm") "NSFW, be sure.")))
+    (set! (.src (utils/by-id "rage-img")) 
+      (to-imgur-url (aget rage "url")))
+    (set! (.src (utils/by-id "rage-img")) "nsfw-placeholder.jpg")))
 
 (defn ^:export show-next-rage []
   (if (< current-rage-index (- (count loaded-rages) 1))

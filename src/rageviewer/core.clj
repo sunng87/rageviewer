@@ -27,7 +27,7 @@
 (defn save-rages [lrages]
   (doseq [rage-item lrages]
     (do
-      (let [{id :id title :title ups :ups 
+      (let [{id :id title :title over_18 :over_18 ups :ups 
              downs :downs url :url author :author 
              permalink :permalink created :created} rage-item]
         (redis/hmset *db* 
@@ -40,7 +40,8 @@
            "url" url
            "author" author
            "permalink" permalink
-           "created" (str created)  ;; key-values
+           "created" (str created)
+           "over_18" (str over_18)  ;; key-values
           })))))
 
 (defn- download-rage [name]
