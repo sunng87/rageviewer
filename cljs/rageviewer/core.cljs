@@ -82,7 +82,7 @@
 
 (defn ^:export show-all []
   (set! (.hash (js* "window.location")) "") ;; remove hash
-  (utils/open-jsonp "./rages" nil rageviewer.core.load_rages))
+  (open-rages "f7u12"))
 
 (defn make-rage-ele [rage]
   (utils/new-ele "li" 
