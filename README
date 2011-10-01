@@ -1,13 +1,19 @@
 # rageviewer
 
-A rage comic viewer written in clojure.
+A rage comic viewer written in Clojure and ClojureScript. 
+You can find an instance on http://rageviewer.cloudfoundry.com/
 
 ## Usage
 
-1. Check the code from github
+1. Check out code from github
 2. lein deps
-3. Start a redis server on localhost and listen default port
+3. Start a redis server on localhost and listen to default port
 4. lein ring server
+
+## Deployment
+
+1. Package a war archive: lein ring uberwar
+2. Deploy to CloudFoundry: vmc push YOUR_APP_NAME
 
 ## License
 
