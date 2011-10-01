@@ -52,20 +52,22 @@
           (filter #(re-find #"imgur\.com" (:domain %)) new-rages)))))) ;;only accept comics from imgur.com
 
 (defn refresh-rages []
-  (do
-    (doall (pmap download-rage (keys rage-subreddits)))
-    (let [loaded-rages (apply concat (vals @rages))]
-      (logging/info (str (count loaded-rages) " rages loaded"))
-      (save-rages loaded-rages)
-      (logging/info (str (count loaded-rages) " rages saved")))
-  ))
+  (try
+    (do
+      (doall (pmap download-rage (keys rage-subreddits)))
+      (let [loaded-rages (apply concat (vals @rages))]
+        (logging/info (str (count loaded-rages) " rages loaded"))
+        (save-rages loaded-rages)
+        (logging/info (str (count loaded-rages) " rages saved"))))
+    (catch Exception e (logging/warn "Exception caught when refresh rages" e))
+    (finally
+      (schedule refresh-rages 15))))
 
 (defn app-init []
   (do
     (def *db* (init-redis-connections))
     (logging/info "database initialized")
-    (refresh-rages)
-    (schedule-refresh-task refresh-rages)))
+    (refresh-rages)))
 
 (defn update-view-count [id]
   (str (redis/zincrby *db* rages-viewcount 1 id)))

@@ -10,6 +10,12 @@
 (defn schedule-refresh-task [task] 
   (.scheduleWithFixedDelay (. Executors newScheduledThreadPool 2) 
     (wrap-task task) 15 15 (. TimeUnit MINUTES)))
+
+(def scheduler
+  (Executors/newScheduledThreadPool 2))
+
+(defn schedule [task delay]
+  (.schedule scheduler task (long delay) TimeUnit/MINUTES))
   
 (defn redirect-to [path]
   {:status 302
