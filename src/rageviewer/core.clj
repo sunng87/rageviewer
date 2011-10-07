@@ -4,7 +4,7 @@
   (:require [compojure.route :as route]
             [compojure.handler :as handler]
             [clj-redis.client :as redis]
-            [clojure.contrib.logging :as logging])
+            [clojure.tools.logging :as logging])
   (:require [reddit.clj.core :as reddit]))
 
 (def reddit-client (reddit/login nil nil))

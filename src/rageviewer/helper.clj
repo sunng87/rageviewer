@@ -1,7 +1,7 @@
 (ns rageviewer.helper
   (:require [clj-redis.client :as redis])
-  (:require [clojure.contrib.json :as json])
-  (:require [clojure.contrib.logging :as logging])
+  (:require [clojure.data.json :as json])
+  (:require [clojure.tools.logging :as logging])
   (:import [java.util.concurrent Executors TimeUnit]))
 
 (defn- wrap-task [task]
