@@ -2,6 +2,7 @@
   (:require [clj-redis.client :as redis])
   (:require [clojure.data.json :as json])
   (:require [clojure.tools.logging :as logging])
+  (:import [java.util UUID])
   (:import [java.util.concurrent Executors TimeUnit]))
 
 (defn- wrap-task [task]
@@ -53,3 +54,11 @@
 
 (defn get-rage-item-key [id]
   (str "rage-item::" id))
+
+(defn get-reddit-user-key [reddit-id]
+  (str "reddit-user::" reddit-id))
+
+(defn uuid []
+  (.toString (UUID/randomUUID)))
+
+

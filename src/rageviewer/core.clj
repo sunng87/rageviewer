@@ -4,6 +4,7 @@
   (:require [compojure.route :as route]
             [compojure.handler :as handler]
             [clj-redis.client :as redis]
+            [clojure.data.json :as json]
             [clojure.tools.logging :as logging])
   (:require [reddit.clj.core :as reddit]))
 
@@ -80,6 +81,22 @@
   (let [top-rages (redis/zrevrange *db* rages-viewcount 0 4)]
     (pmap get-rage-by-id top-rages)))
 
+(defn login [req]
+  (let [user (:user (:params req))
+        passwd (:passwd (:params req))
+        reddit-user (reddit/login user passwd)
+        credentials (:credential reddit-user)]
+    (if-not (nil? credentials)
+      {:cookies (hash-map :reddit-session (-> credentials :reddit_session :value) :id user)
+       :body "OK"}
+      {:body "FAILED"})))
+
+(defn upvote [req]
+)
+
+(defn downvote [req]
+)
+
 (defroutes default-routes
   (GET "/" [] (redirect-to "index.html"))
   (GET "/rage/:id" [id callback]
@@ -95,7 +112,10 @@
   (POST "/viewed" [id]
     (update-view-count id))
   (GET "/top" [callback]
-    (json-response (get-top-rages) callback))
+       (json-response (get-top-rages) callback))
+  (POST "/login" [] login)
+  (POST "/upvote" [] upvote)
+  (POST "/downvote" [] downvote)
   (route/resources "/")
   (route/not-found "Page not found"))
 
