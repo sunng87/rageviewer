@@ -10,3 +10,5 @@ resources/public/scripts/out
 *.war
 control.clj
 out/
+output
+*.rdb
