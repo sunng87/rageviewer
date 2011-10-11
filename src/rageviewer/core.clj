@@ -87,15 +87,31 @@
         reddit-user (reddit/login user passwd)
         credentials (:credential reddit-user)]
     (if-not (nil? credentials)
-      {:cookies (hash-map :reddit-session (-> credentials :reddit_session :value) :id user)
+      {:session {:reddit-user reddit-user}
        :body "OK"}
       {:body "FAILED"})))
 
+(defn logout [req]
+  {:session {:reddit-user nil}
+   :body "OK"})
+
 (defn upvote [req]
-)
+  (let [reddit-user (:reddit-user (:session req))
+        reddit-id (:reddit-id (:params req))]
+    (if-not (nil? reddit-user)
+      (do
+        (reddit/vote-up reddit-user reddit-id)
+        {:body "OK"})
+      {:body "FAILED"})))
 
 (defn downvote [req]
-)
+  (let [reddit-user (:reddit-user (:session req))
+        reddit-id (:reddit-id (:params req))]
+    (if-not (nil? reddit-user)
+      (do
+        (reddit/vote-down reddit-user reddit-id)
+        {:body "OK"})
+      {:body "FAILED"})))
 
 (defroutes default-routes
   (GET "/" [] (redirect-to "index.html"))
@@ -114,6 +130,7 @@
   (GET "/top" [callback]
        (json-response (get-top-rages) callback))
   (POST "/login" [] login)
+  (GET "/logout" [] logout)
   (POST "/upvote" [] upvote)
   (POST "/downvote" [] downvote)
   (route/resources "/")
