@@ -87,13 +87,19 @@
         reddit-user (reddit/login user passwd)
         credentials (:credential reddit-user)]
     (if-not (nil? credentials)
-      {:session {:reddit-user reddit-user}
-       :body "OK"}
+      {:session {:reddit-user reddit-user
+                 :user user}
+       :body (str "OK:" user)}
       {:body "FAILED"})))
 
 (defn logout [req]
   {:session {:reddit-user nil}
    :body "OK"})
+
+(defn login-status [req]
+  (if-let [user (:user (:session req))]
+    {:body (str "OK" ":" user)}
+    {:body "FAILED"}))
 
 (defn upvote [req]
   (let [reddit-user (:reddit-user (:session req))
@@ -131,6 +137,7 @@
        (json-response (get-top-rages) callback))
   (POST "/login" [] login)
   (GET "/logout" [] logout)
+  (GET "/login-status" [] login-status)
   (POST "/upvote" [] upvote)
   (POST "/downvote" [] downvote)
   (route/resources "/")

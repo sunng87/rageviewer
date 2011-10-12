@@ -1,66 +1,99 @@
 <!DOCTYPE html5>
 <html>
-    <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <head>
+    <meta charset="utf-8">
 
     <title>Rage Viewer</title>
     <link href='http://fonts.googleapis.com/css?family=Short+Stack' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="styles/default.css" type="text/css" charset="utf-8">    
     <script src="scripts/rageviewer.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript">
-        window.onload = rageviewer.core.init;
+      window.onload = rageviewer.core.init;
     </script>
-</head>
-<body>
+  </head>
+  <body>
     <div id="page">
-        <div class="heading">
-            <div id="inner-heading">
-                <div id="channel-indicator" title="Current Rage Comic Channel">
-                    <span class="smallx">Channel:</span>
-                    <span id="channel-label" onclick="rageviewer.core.show_channel_selector();">f7u12</span>
-                    <select id="channel-selector" onchange="rageviewer.core.set_channel();">
-                        <option selected="true">f7u12</option>
-                        <option>novels</option>
-                        <option>recipes</option>
-                        <option>classic</option>
-                        <option>ladies</option>
-                        <option>news</option>
-                        <option>athiest</option>
-                        <option>military</option>
-                        <option>dreams</option>
-                        <option>historical</option>
-                    </select>
-                </div>
-                <h1><img src="rageface.png" /> Rage Viewer</h1>
-            </div>
+      <div class="heading">
+        <div id="inner-heading">
+          <div id="channel-indicator" title="Current Rage Comic Channel">
+            <span class="smallx">Channel:</span>
+            <span id="channel-label" onclick="rageviewer.core.show_channel_selector();">f7u12</span>
+            <select id="channel-selector" onchange="rageviewer.core.set_channel();">
+              <option selected="true">f7u12</option>
+              <option>novels</option>
+              <option>recipes</option>
+              <option>classic</option>
+              <option>ladies</option>
+              <option>news</option>
+              <option>athiest</option>
+              <option>military</option>
+              <option>dreams</option>
+              <option>historical</option>
+            </select>
+          </div>
+          <h1><img src="rageface.png" /> Rage Viewer</h1>
         </div>
+      </div>
 
-        <div id="rage-header">
-            <h2 id="rage-title" class="default_title">No rage loaded</h2>
-            <div id="rage-votes">
-              <p>UPVOTEs: <span id="rage-voteup">-</span></p>
-              <p>DOWNVOTEs: <span id="rage-votedown">-</span></p>
-            </div>
-            <div id="rage-info">
-              <p>Author: <span id="rage-author">-</span></p>
-              <p>Date published: <span id="rage-date">-</span></p>
-              <p><a href="-" target="new" id="rage-link">Permalink on Reddit</a>
-                 <a href="-" target="new" id="rage-link2">Permalink on RageViewer</a></p>
-            </div>
+      <div id="rage-header">
+        <h2 id="rage-title" class="default_title">No rage loaded</h2>
+        <div id="rage-votes">
+          <p>UPVOTEs: <span id="rage-voteup">-</span></p>
+          <p>DOWNVOTEs: <span id="rage-votedown">-</span></p>
         </div>
-        <div id="viewport"><img src="" title="-" id="rage-img" onload="rageviewer.core.view_feedback();" /></div>
-        <div id="nav_bar">
-            <button onclick="rageviewer.core.show_prev_rage();">prev</button>
-            <button onclick="rageviewer.core.show_next_rage();">next</button>
+        <div id="rage-info">
+          <p>Author: <span id="rage-author">-</span></p>
+          <p>Date published: <span id="rage-date">-</span></p>
+          <p><a href="-" target="new" id="rage-link">Permalink on Reddit</a>
+            <a href="-" target="new" id="rage-link2">Permalink on RageViewer</a></p>
         </div>
-        <div id="nav_bar2">
-            <button onclick="rageviewer.core.show_all();">show most recent hot comics</button>
-        </div>
+      </div>
+      <div id="viewport"><img src="" title="-" id="rage-img" onload="rageviewer.core.view_feedback();" /></div>
+      <div id="nav_bar">
+        <button onclick="rageviewer.core.show_prev_rage();">prev</button>
+        <button onclick="rageviewer.core.show_next_rage();">next</button>
+      </div>
+      <div id="nav_bar2">
+        <button onclick="rageviewer.core.show_all();">show most recent hot comics</button>
+      </div>
 
-        <div id="footer">&copy; Drafted by <a href="http://sunng.info/">@Sunng</a>, 
-            project hosted on <a href="https://github.com/sunng87/rageviewer">github</a>; 
-            <br/>Clojure, Compojure, ClojureScript, Redis; Rages loaded from Reddit.</div>
+      <div id="footer">&copy; Drafted by <a href="http://sunng.info/">@Sunng</a>, 
+        project hosted on <a href="https://github.com/sunng87/rageviewer">github</a>; 
+        <br/>Clojure, Compojure, ClojureScript, Redis; Rages
+        loaded from Reddit.</div>
+
+      <div id="loginbox" class="loginbox-off">
+
+        <div id="loginbox-content">
+          <div id="loginbox-form">
+            <label for="reddit-user">Reddit Username:</label><br/>
+            <input type="text" size="12" name="reddit-user"
+                   id="reddit-user" /><br/>
+            <label for="reddit-passwd">Password:</label><br/>
+            <input type="password" size="12" name="reddit-passwd"
+                   id="reddit-passwd" /><br/>
+            <button onclick="rageviewer.core.login();">Login</button><br/>
+            <span id="login-error" class="error">Login failed.</span>
+          </div>
+          <div id="loginbox-infobox">
+            Reddit user: <span id="reddit-name">$$$</span>. <br/>
+            <button onclick="rageviewer.core.logout();">Logout</button>            <br/>
+            Vote this rage :<br/>
+                <button onclick="rageviewer.core.voteup();">&#x25B2;</button>
+                <button onclick="rageviewer.core.votedown();">&#x25BC;</button>
+            <p id="vote-response">Voted.</p>
+                
+
+          </div>
+        </div>
+        <div id="loginbox-label"
+             onclick="rageviewer.core.toggle_login_box();">
+          Reddit User
+        </div>
+      </div>
+
     </div>
-</body>
+    
+  </body>
 </html>
 

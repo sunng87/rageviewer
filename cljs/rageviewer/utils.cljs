@@ -17,17 +17,26 @@
 (defn append-ele [parent child]
   (dom/appendChild parent child))
 
-(defn show [ele]
-  (set! (.display (aget ele "style")) "block"))
+(defn set-css [ele name value]
+  (aset (aget ele "style") name value))
+(defn get-css [ele name]
+  (aget (aget ele "style") name))
+(defn show
+  ([ele] (show ele "block"))
+  ([ele display] (set-css ele "display" display)))
 (defn hide [ele]
-  (set! (.display (aget ele "style")) "none"))
+  (set-css ele "display" "none"))
 (defn toggle [ele]  
   (if (= (.display (aget ele "style")) "none")
     (show ele)
     (hide ele)))
 (def alert (js* "alert"))
+(def this (js* "this"))
 (defn js-date [arg]
   (new (js* "Date") arg))
+(def encodeURI (js* "encodeURI"))
+(defn run-later [func time]
+  ((js* "setTimeout") func time))
  
 (defn timestamp-to-date [ts]
   (. (js-date (* 1000 ts)) (toUTCString)))
@@ -38,8 +47,18 @@
       payload
       callback)))
 
-(defn send-xhr [url method content headers]
+(defn send-xhr
+  ([url method content headers] (send-xhr url method content headers nil))
+  ([url method content headers callback]
   (let [xhr (goog.net.XhrIo.)
-        header-obj (as-js-obj headers)]
-     (.send xhr url method content header-obj)))
+        header-obj (when headers (as-js-obj headers))]
+    (if-not (nil? callback)
+      (.addEventListener xhr goog.net.EventType/COMPLETE callback))
+    (.send xhr url method content header-obj))))
+
+(defn toggle-class [ele class1 class2]
+  (if (not= (aget ele "className") class1)
+    (set! (.className ele) class1)
+    (set! (.className ele) class2)))
+
 

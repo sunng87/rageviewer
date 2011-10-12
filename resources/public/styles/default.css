@@ -9,16 +9,16 @@ body {
   text-align:center;
 }
 .heading{
-background: #424242;
-background: -moz-linear-gradient(top, #424242 0%, #0e0e0e 100%);
-background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#424242), color-stop(100%,#0e0e0e));
-background: -webkit-linear-gradient(top, #424242 0%,#0e0e0e 100%);
-background: -o-linear-gradient(top, #424242 0%,#0e0e0e 100%);
-background: -ms-linear-gradient(top, #424242 0%,#0e0e0e 100%);
-background: linear-gradient(top, #424242 0%,#0e0e0e 100%);
-position:fixed;
-top:0;
-width:100%;
+    background: #424242;
+    background: -moz-linear-gradient(top, #424242 0%, #0e0e0e 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#424242), color-stop(100%,#0e0e0e));
+    background: -webkit-linear-gradient(top, #424242 0%,#0e0e0e 100%);
+    background: -o-linear-gradient(top, #424242 0%,#0e0e0e 100%);
+    background: -ms-linear-gradient(top, #424242 0%,#0e0e0e 100%);
+    background: linear-gradient(top, #424242 0%,#0e0e0e 100%);
+    position:fixed;
+    top:0;
+    width:100%;
     box-shadow:0 1px 5px #333;
     -moz-box-shadow:0 1px 5px #333;
     -webkit-box-shadow:0 1px 5px #333;
@@ -180,4 +180,118 @@ a:hover{
 .smallx {
     font-size:0.6em;
     font-weight:normal;
+}
+.error {
+    color:red;
+}
+
+#loginbox {
+
+    position:fixed;
+    top:170px;
+    left:0;
+
+
+    -moz-border-radius:0 8px 8px 0;
+    -webkit-border-radius:0 8px 8px 0;
+    border-radius:0 8px 8px 0;
+    background:#333;
+    padding:5px 5px 5px 0;
+
+    height:200px;
+}
+
+#loginbox-label {
+    display:inline-block;
+    font-size: 0.8em;
+    font-weight:bold;
+    color:#FFF;
+
+
+    margin-left:2px;
+    margin-right:-65px;
+
+    vertical-align:top;
+    -moz-transform:rotate(-270deg); 
+    -moz-transform-origin: bottom left;
+    -webkit-transform: rotate(-270deg);
+    -webkit-transform-origin: bottom left;
+    -o-transform: rotate(-270deg);
+    -o-transform-origin:  bottom left;
+    text-align:center;
+    cursor: pointer;
+}
+#loginbox-label:hover {
+    color:#D09812;
+}
+#loginbox-content {
+    -moz-border-radius:0 5px 5px 0;
+    -webkit-border-radius:0 5px 5px 0;
+    border-radius:0 5px 5px 0;
+    display:inline-block;
+    font-family:sans-serif;
+    width:100px;
+    padding:5px;
+    background:#FFF;
+    color:#000;
+    vertical-align:top;
+    margin-top:15px;
+    font-size:0.7em;
+    text-align:left;
+    line-height:200%;
+}
+input[type=text], input[type=password] {
+
+    border:1px #CCC solid;
+    width:80px;
+}
+#loginbox-infobox {
+    display:none;
+}
+#loginbox-content button {
+    padding:2px;
+    background:#EEE;
+    color:#333;
+    border:1px #CCC solid;
+    box-shadow:none;
+    -moz-box-shadow:none;
+    -webkit-box-shadow:none;
+    font-weight:normal;
+    border-radius:0;
+    -moz-border-radius:0;
+    -webkit-border-radius:0;
+}
+#reddit-name{
+    font-weight:bold;
+}
+.loginbox-off{
+    -webkit-transition-property: margin-left;
+    -webkit-transition-duration:0.5s;
+    -webkit-transition-timing-function:ease-in;
+    -moz-transition-property: margin-left;
+    -moz-transition-duration:0.5s;
+    -moz-transition-timing-function:ease-in;
+    -o-transition-property: margin-left;
+    -o-transition-duration:0.5s;
+    -o-transition-timing-function:ease-in;  
+    margin-left:-110px !important;
+}
+.loginbox-on{
+    -webkit-transition-property: margin-left;
+    -webkit-transition-duration:0.5s;
+    -webkit-transition-timing-function:ease-in;
+    -moz-transition-property: margin-left;
+    -moz-transition-duration:0.5s;
+    -moz-transition-timing-function:ease-in;
+    -o-transition-property: margin-left;
+    -o-transition-duration:0.5s;
+    -o-transition-timing-function:ease-in;
+    margin-left:0 !important;
+}
+#login-error {
+    visibility: hidden;
+}
+
+#vote-response {
+    display:none;
 }

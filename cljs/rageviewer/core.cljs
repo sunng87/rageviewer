@@ -72,13 +72,6 @@
 (defn ^:export open-rages [channel]
   (utils/open-jsonp (str "./rages/" channel) nil rageviewer.core.load_rages))
 
-(defn ^:export init []
-  (let [urlhash (js* "window.location.hash")]
-    (if (<= (count urlhash) 1)
-      (open-rages "f7u12")
-      (utils/open-jsonp 
-        (str "./rage/" (.substring urlhash 1)) nil 
-          rageviewer.core.load_rage))))
 
 (defn ^:export show-all []
   (set! (.hash (js* "window.location")) "") ;; remove hash
@@ -116,4 +109,55 @@
     (utils/show (utils/by-id "channel-label"))
     (utils/hide (utils/by-id "channel-selector"))
     (open-rages selected-channel)))
+
+(defn ^:export toggle-login-box []
+  (utils/toggle-class (utils/by-id "loginbox") "loginbox-on" "loginbox-off"))
+
+(defn login-callback [prompt-on-fail e]
+  (let [resp (. e/target (getResponseText))]
+    (if (== 0 (.indexOf resp "OK"))
+      (do
+        (utils/show (utils/by-id "loginbox-infobox") "inline-block")
+        (utils/hide (utils/by-id "loginbox-form"))
+        (set! (.innerHTML (utils/by-id "reddit-name")) (aget (.split resp ":") 1)))
+      (if prompt-on-fail
+        (utils/set-css (utils/by-id "login-error") "visibility" "visible")))))
+
+(defn ^:export login []
+  (let [username (aget (utils/by-id "reddit-user") "value")
+        password (aget (utils/by-id "reddit-passwd") "value")]
+    (set! (.value (utils/by-id "reddit-passwd")) "")
+    (utils/send-xhr "./login" "POST"
+                    (str "user=" (utils/encodeURI username) "&passwd=" (utils/encodeURI password))
+                    {"Content-Type" "application/x-www-form-urlencoded"}
+                    (partial login-callback true))))
+
+(defn login-status []
+  (utils/send-xhr "./login-status" "GET" nil nil (partial login-callback false)))
+
+(defn vote-callback [e]
+  (utils/show (utils/by-id "vote-response"))
+  (utils/run-later #(utils/hide (utils/by-id "vote-response")) 1000))
+(defn vote [id url]
+  (utils/send-xhr url "POST" (str "reddit-id=" id) nil vote-callback))
+
+(defn ^:export voteup []
+  (vote (str "t3_" (aget current-rage "id")) "./upvote"))
+
+(defn ^:export votedown []
+  (vote (str "t3_" (aget current-rage "id")) "./downvote"))
+
+(defn ^:export logout []
+  (utils/send-xhr "./logout" "GET" nil nil)
+  (utils/show (utils/by-id "loginbox-form") "inline-block")
+  (utils/hide (utils/by-id "loginbox-infobox")))
+
+(defn ^:export init []
+  (let [urlhash (js* "window.location.hash")]
+    (if (<= (count urlhash) 1)
+      (open-rages "f7u12")
+      (utils/open-jsonp 
+        (str "./rage/" (.substring urlhash 1)) nil 
+        rageviewer.core.load_rage)))
+  (login-status))
 
