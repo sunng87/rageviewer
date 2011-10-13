@@ -8,5 +8,5 @@
                  [clj-redis "0.0.12"]]
   :dev-dependencies [[lein-ring "0.4.5"]
                                    [lein-control "0.1.1"]]
-  :ring {:handler rageviewer.core/app
-         :init  rageviewer.core/app-init})
+  :ring {:handler rageviewer.routes/app
+         :init  rageviewer.routes/app-init})
