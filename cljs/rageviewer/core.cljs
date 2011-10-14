@@ -111,7 +111,7 @@
     (open-rages selected-channel)))
 
 (defn ^:export toggle-login-box []
-  (utils/toggle-class (utils/by-id "loginbox") "loginbox-on" "loginbox-off"))
+  (utils/swap-class (utils/by-id "loginbox") "loginbox-on" "loginbox-off"))
 
 (defn login-callback [prompt-on-fail e]
   (let [resp (. e/target (getResponseText))]

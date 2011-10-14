@@ -1,7 +1,8 @@
 (ns rageviewer.utils
   (:require [goog.net.XhrIo :as gxhr]
             [goog.net.Jsonp :as gjsonp]
-            [goog.dom :as dom]))
+            [goog.dom :as dom]
+            [goog.dom.classes :as gclass]))
 
 (defn by-id [id] (dom/$ id))
 (def document (dom/getDocument))
@@ -56,9 +57,8 @@
       (.addEventListener xhr goog.net.EventType/COMPLETE callback))
     (.send xhr url method content header-obj))))
 
-(defn toggle-class [ele class1 class2]
-  (if (not= (aget ele "className") class1)
-    (set! (.className ele) class1)
-    (set! (.className ele) class2)))
+(defn swap-class [ele class1 class2]
+  (gclass/toggle ele class1)
+  (gclass/toggle ele class2))
 
 
