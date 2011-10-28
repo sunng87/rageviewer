@@ -18,11 +18,6 @@
 (defn schedule [task delay]
   (.schedule scheduler task (long delay) TimeUnit/MINUTES))
   
-(defn redirect-to [path]
-  {:status 302
-   :headers {"Location" path}
-  })
-
 (defn json-response [data, callback]
   {:headers 
     {"Content-Type" (if (nil? callback) 

@@ -49,11 +49,11 @@
         </div>
       </div>
       <div id="viewport"><img src="" title="-" id="rage-img" onload="rageviewer.core.view_feedback();" /></div>
-      <div id="nav_bar">
+      <div id="nav_bar" class="fixed-nav-bar">
         <button onclick="rageviewer.core.show_prev_rage();">prev</button>
         <button onclick="rageviewer.core.show_next_rage();">next</button>
       </div>
-      <div id="nav_bar2">
+      <div id="nav_bar2" class="fixed-nav-bar">
         <button onclick="rageviewer.core.show_all();">show most recent hot comics</button>
       </div>
 
@@ -65,8 +65,9 @@
       <div id="loginbox" class="loginbox-off">
 
         <div id="loginbox-content">
+          <img src="determined.png" title="redditor" alt="redditor" />
           <div id="loginbox-form">
-            <label for="reddit-user">Reddit Username:</label><br/>
+            <label for="reddit-user">Username:</label><br/>
             <input type="text" size="12" name="reddit-user"
                    id="reddit-user" /><br/>
             <label for="reddit-passwd">Password:</label><br/>
@@ -76,7 +77,7 @@
             <span id="login-error" class="error">Login failed.</span>
           </div>
           <div id="loginbox-infobox">
-            Reddit user: <span id="reddit-name">$$$</span>. <br/>
+            <span id="reddit-name">$$$</span>. <br/>
             <button onclick="rageviewer.core.logout();">Logout</button>            <br/>
             Vote this rage :<br/>
                 <button onclick="rageviewer.core.voteup();">&#x25B2;</button>
@@ -88,7 +89,7 @@
         </div>
         <div id="loginbox-label"
              onclick="rageviewer.core.toggle_login_box();">
-          Reddit User
+          Redditors
         </div>
       </div>
 

@@ -198,7 +198,7 @@ a:hover{
     background:#333;
     padding:5px 5px 5px 0;
 
-    height:200px;
+    height:240px;
 }
 
 #loginbox-label {
@@ -209,8 +209,8 @@ a:hover{
 
 
     margin-left:2px;
-    margin-right:-65px;
-
+    margin-right:-60px;
+    font-family: 'Short Stack', sans-serif;
     vertical-align:top;
     -moz-transform:rotate(-270deg); 
     -moz-transform-origin: bottom left;
@@ -294,4 +294,16 @@ input[type=text], input[type=password] {
 
 #vote-response {
     display:none;
+}
+div.fixed-nav-bar {
+    position: fixed;
+    bottom: 50px;
+    z-index:1001;
+    text-align:center;
+    margin:auto;
+    width:100%;
+    
+}
+div.fixed-nav-bar:hover {
+    background: rgba(0,0,0, 0.2);
 }

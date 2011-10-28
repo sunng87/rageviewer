@@ -3,6 +3,7 @@
   (:use [rageviewer actions services helper])
   (:require [compojure.route :as route]
             [compojure.handler :as handler]
+            [ring.util.response :as ring]
             [clojure.tools.logging :as logging]))
 
 
@@ -13,7 +14,7 @@
     (refresh-rages)))
 
 (defroutes default-routes
-  (GET "/" [] (redirect-to "index.html"))
+  (GET "/" [] (ring/redirect "index.html"))
   (GET "/rage/:id" [] get-rage)
   (GET "/rages/:channel" [] get-rages)
   (POST "/viewed" [] viewed)
