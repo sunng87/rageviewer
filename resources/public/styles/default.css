@@ -302,8 +302,9 @@ div.fixed-nav-bar {
     text-align:center;
     margin:auto;
     width:100%;
-    
+    opacity:0.5;
 }
 div.fixed-nav-bar:hover {
     background: rgba(0,0,0, 0.2);
+    opacity:1;
 }
