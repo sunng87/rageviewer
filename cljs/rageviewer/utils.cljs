@@ -36,6 +36,7 @@
 (defn js-date [arg]
   (new (js* "Date") arg))
 (def encodeURI (js* "encodeURI"))
+(def encodeURIComponent (js* "encodeURIComponent"))
 (defn run-later [func time]
   ((js* "setTimeout") func time))
  

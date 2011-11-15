@@ -26,6 +26,11 @@
     (utils/timestamp-to-date (aget rage "created")))
   (set! (.href (utils/by-id "rage-link2")) (str "#" (aget rage "id")))
   (set! (.title utils/document) (str (aget rage "title") " | Rage Viewer"))
+  (set! (.href (utils/by-id "share_button"))
+        (str "https://twitter.com/share?url="
+             (utils/encodeURIComponent (str (js* "window.location") "#" (aget rage "id")))
+             "&text="
+             (utils/encodeURIComponent (aget rage "title"))))
   ((js* "scroll") 0 0)
   (if (or (not= "true" (str (aget rage "over_18")))
           (true? ((js* "confirm") "NSFW, be sure.")))

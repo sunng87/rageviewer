@@ -136,6 +136,10 @@ h2.default_title {
     background-color:#333;
     color:#CCC;
 }
+#footer a {
+    color:#FFF;
+    text-decoration:none;
+}
 button {
     padding:5px 20px;
     font-size:1.2em;
@@ -164,7 +168,7 @@ button:hover {
     -moz-box-shadow: 0 0 5px #666;
     -webkit-box-shadow: 0 0 5px #666;
 }
-a:link, a:visited{
+a.link_small:link, a.link_small:visited{
     padding:2px 5px;
     background:#333;
     color:#FFF;
@@ -174,8 +178,11 @@ a:link, a:visited{
     -webkit-border-radius:2px;
     border-radius:2px;
 }
-a:hover{
+a.link_small:hover{
     background-color:#666;
+}
+.link_small {
+    font-size:0.8em !important;
 }
 .smallx {
     font-size:0.6em;
