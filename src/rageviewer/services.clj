@@ -10,15 +10,12 @@
 (def rages (ref {}))
 (def rage-subreddits
   {:f7u12 "fffffffuuuuuuuuuuuu"
-   :novels "ragenovels"
    :recipes "fffffffuuuuuuuuuuuud"
    :classic "classicrage"
    :ladies "trollxchromosomes"
    :news "nnnnnnneeeeeeeeeeeews"
    :athiest "aaaaaatheismmmmmmmmmm"
-   :military "rageops"
-   :dreams "ragedreams"
-   :historical "historicalrage"})
+   :linux "linuxrage"})
 (def rages-viewcount "rages-viewcount")
 (declare *db*)
 (defn init-db []
