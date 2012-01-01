@@ -17,9 +17,9 @@
    :athiest "aaaaaatheismmmmmmmmmm"
    :linux "linuxrage"})
 (def rages-viewcount "rages-viewcount")
-(declare *db*)
+(declare db)
 (defn init-db []
-  (def *db* (init-redis-connections)))
+  (def db (init-redis-connections)))
 
 (defn save-rages [lrages]
   (doseq [rage-item lrages]
@@ -27,7 +27,7 @@
       (let [{id :id title :title over_18 :over_18 ups :ups 
              downs :downs url :url author :author 
              permalink :permalink created :created} rage-item]
-        (redis/hmset *db* 
+        (redis/hmset db 
           (get-rage-item-key id) ;;hash-key rage-item::abcde
           {
            "id" id
@@ -61,14 +61,14 @@
       (schedule refresh-rages 15))))
 
 (defn update-view-count [id]
-  (str (redis/zincrby *db* rages-viewcount 1 id)))
+  (str (redis/zincrby db rages-viewcount 1 id)))
 
 (defn get-rage-by-id [id]
   (let [rage-id (get-rage-item-key id)]
-    (redis/hgetall *db* rage-id)))
+    (redis/hgetall db rage-id)))
           
 (defn get-top-rages []
-  (let [top-rages (redis/zrevrange *db* rages-viewcount 0 4)]
+  (let [top-rages (redis/zrevrange db rages-viewcount 0 4)]
     (pmap get-rage-by-id top-rages)))
 
 (defn get-rages-by-channel [channel]
