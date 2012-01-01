@@ -12,3 +12,4 @@ control.clj
 out/
 output
 *.rdb
+.*
