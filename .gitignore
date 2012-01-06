@@ -13,3 +13,4 @@ out/
 output
 *.rdb
 .*
+resources/public/scripts/rageviewer.js
