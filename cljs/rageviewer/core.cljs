@@ -36,7 +36,7 @@
   (set! (. (utils/by-id "share_button") -href)
         (share-url "https://twitter.com/share" rage))
   (set! (. (utils/by-id "buffer_button") -href)
-        (share-url "http://bufferapp.com/add?" rage))
+        (share-url "http://bufferapp.com/add" rage))
   ((js* "scroll") 0 0)
   (if (or (not= "true" (str (aget rage "over_18")))
           (true? ((js* "confirm") "NSFW, be sure.")))
