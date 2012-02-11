@@ -28,7 +28,7 @@
 (defn hide [ele]
   (set-css ele "display" "none"))
 (defn toggle [ele]  
-  (if (= (.display (aget ele "style")) "none")
+  (if (= (. (aget ele "style") -display) "none")
     (show ele)
     (hide ele)))
 (def alert (js* "alert"))

@@ -14,34 +14,35 @@
 (defn share-url [url-base rage]
   (str url-base
        "?url="
-       (utils/encodeURIComponent (str (js* "window.location") "#" (aget rage "id")))
+       (utils/encodeURIComponent
+        (str (js* "window.location") "#" (aget rage "id")))
        "&text="
        (utils/encodeURIComponent (aget rage "title"))))
 
 (defn show-rage [rage]
-  (set! (.src (utils/by-id "rage-img")) "")
-  (set! (.alt (utils/by-id "rage-img")) "loading...") 
-  (set! (.innerHTML (utils/by-id "rage-title")) (aget rage "title"))
-  (set! (.innerHTML (utils/by-id "rage-voteup")) (aget rage "ups"))
-  (set! (.innerHTML (utils/by-id "rage-votedown")) (aget rage "downs"))
-  (set! (.title (utils/by-id "rage-img")) (aget rage "title"))
-  (set! (.innerHTML (utils/by-id "rage-author")) (aget rage "author"))
-  (set! (.href (utils/by-id "rage-link")) 
+  (set! (. (utils/by-id "rage-img") -src) "")
+  (set! (. (utils/by-id "rage-img") -alt) "loading...") 
+  (set! (. (utils/by-id "rage-title") -innerHTML) (aget rage "title"))
+  (set! (. (utils/by-id "rage-voteup") -innerHTML) (aget rage "ups"))
+  (set! (. (utils/by-id "rage-votedown") -innerHTML) (aget rage "downs"))
+  (set! (. (utils/by-id "rage-img") -title) (aget rage "title"))
+  (set! (. (utils/by-id "rage-author") -innerHTML) (aget rage "author"))
+  (set! (. (utils/by-id "rage-link") -href) 
     (str "http://www.reddit.com" (aget rage "permalink")))
-  (set! (.innerHTML (utils/by-id "rage-date")) 
+  (set! (. (utils/by-id "rage-date") -innerHTML) 
     (utils/timestamp-to-date (aget rage "created")))
-  (set! (.href (utils/by-id "rage-link2")) (str "#" (aget rage "id")))
-  (set! (.title utils/document) (str (aget rage "title") " | Rage Viewer"))
-  (set! (.href (utils/by-id "share_button"))
+  (set! (. (utils/by-id "rage-link2") -href) (str "#" (aget rage "id")))
+  (set! (. utils/document -title) (str (aget rage "title") " | Rage Viewer"))
+  (set! (. (utils/by-id "share_button") -href)
         (share-url "https://twitter.com/share" rage))
-  (set! (.href (utils/by-id "buffer_button"))
+  (set! (. (utils/by-id "buffer_button") -href)
         (share-url "http://bufferapp.com/add?" rage))
   ((js* "scroll") 0 0)
   (if (or (not= "true" (str (aget rage "over_18")))
           (true? ((js* "confirm") "NSFW, be sure.")))
-    (set! (.src (utils/by-id "rage-img")) 
+    (set! (. (utils/by-id "rage-img") -src) 
       (to-imgur-url (aget rage "url")))
-    (set! (.src (utils/by-id "rage-img")) "nsfw-placeholder.jpg")))
+    (set! (. (utils/by-id "rage-img") -src) "nsfw-placeholder.jpg")))
 
 (defn ^:export show-next-rage []
   (if (< current-rage-index (- (count loaded-rages) 1))
@@ -84,7 +85,7 @@
 
 
 (defn ^:export show-all []
-  (set! (.hash (js* "window.location")) "") ;; remove hash
+  (set! (. (js* "window.location") -hash) "") ;; remove hash
   (open-rages "f7u12"))
 
 (defn make-rage-ele [rage]
@@ -111,11 +112,11 @@
 
 (defn ^:export set-channel []
   (let [selector (utils/by-id "channel-selector")
-        selected-index (.selectedIndex selector)
-        selected-option (aget (.options selector) selected-index)
-        selected-channel (.value selected-option)]
+        selected-index (. selector -selectedIndex)
+        selected-option (aget (. selector -options) selected-index)
+        selected-channel (. selected-option -value)]
         
-    (set! (.innerHTML (utils/by-id "channel-label")) selected-channel)
+    (set! (. (utils/by-id "channel-label") -innerHTML) selected-channel)
     (utils/show (utils/by-id "channel-label"))
     (utils/hide (utils/by-id "channel-selector"))
     (open-rages selected-channel)))
@@ -129,14 +130,14 @@
       (do
         (utils/show (utils/by-id "loginbox-infobox") "inline-block")
         (utils/hide (utils/by-id "loginbox-form"))
-        (set! (.innerHTML (utils/by-id "reddit-name")) (aget (.split resp ":") 1)))
+        (set! (. (utils/by-id "reddit-name") -innerHTML) (aget (.split resp ":") 1)))
       (if prompt-on-fail
         (utils/set-css (utils/by-id "login-error") "visibility" "visible")))))
 
 (defn ^:export login []
-  (let [username (aget (utils/by-id "reddit-user") "value")
-        password (aget (utils/by-id "reddit-passwd") "value")]
-    (set! (.value (utils/by-id "reddit-passwd")) "")
+  (let [username (. (utils/by-id "reddit-user") -value)
+        password (. (utils/by-id "reddit-passwd") -value)]
+    (set! (. (utils/by-id "reddit-passwd") -value) "")
     (utils/send-xhr "./login" "POST"
                     (str "user=" (utils/encodeURI username) "&passwd=" (utils/encodeURI password))
                     {"Content-Type" "application/x-www-form-urlencoded"}
