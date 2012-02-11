@@ -7,7 +7,7 @@
                  [reddit.clj "0.3.1"]
                  [clj-redis "0.0.12"]]
   :dev-dependencies [[lein-ring "0.5.4"]
-                     [lein-cljsbuild "0.0.8"]]
+                     [lein-cljsbuild "0.0.12"]]
   :cljsbuild {
     :source-path "cljs"
     :compiler {

@@ -11,6 +11,12 @@
       (if (re-find #"[/|\?]$" url)
         (subs url 0 (- (count url) 1)) url)
       ".png")))
+(defn share-url [url-base rage]
+  (str url-base
+       "?url="
+       (utils/encodeURIComponent (str (js* "window.location") "#" (aget rage "id")))
+       "&text="
+       (utils/encodeURIComponent (aget rage "title"))))
 
 (defn show-rage [rage]
   (set! (.src (utils/by-id "rage-img")) "")
@@ -27,10 +33,9 @@
   (set! (.href (utils/by-id "rage-link2")) (str "#" (aget rage "id")))
   (set! (.title utils/document) (str (aget rage "title") " | Rage Viewer"))
   (set! (.href (utils/by-id "share_button"))
-        (str "https://twitter.com/share?url="
-             (utils/encodeURIComponent (str (js* "window.location") "#" (aget rage "id")))
-             "&text="
-             (utils/encodeURIComponent (aget rage "title"))))
+        (share-url "https://twitter.com/share" rage))
+  (set! (.href (utils/by-id "buffer_button"))
+        (share-url "http://bufferapp.com/add?" rage))
   ((js* "scroll") 0 0)
   (if (or (not= "true" (str (aget rage "over_18")))
           (true? ((js* "confirm") "NSFW, be sure.")))
